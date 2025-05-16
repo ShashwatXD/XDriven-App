@@ -1,27 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:xdriven_app/data/api_service.dart';
+import 'package:provider/provider.dart';
+import 'package:xdriven_app/Provider/page_provider.dart';
 import 'package:xdriven_app/main.dart';
-import 'package:xdriven_app/models/UikPageModel.dart';
 import 'package:xdriven_app/renderer/renderer.dart';
 
-class StandardPage extends StatelessWidget {
+class StandardPage extends StatefulWidget {
   final String pageId;
-  const StandardPage({required this.pageId, super.key});
+  const StandardPage({required this.pageId});
 
-  Future<UikPageModel> loadPage() {
-    return SduiApiService.fetchPage(pageId);
+  @override
+  State<StandardPage> createState() => _StandardPageState();
+}
+
+class _StandardPageState extends State<StandardPage> {
+  bool _visible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<PageProvider>().loadPage(widget.pageId);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final pageProvider = context.watch<PageProvider>();
+
+    final isReady = pageProvider.page != null && !pageProvider.isLoading;
+    if (isReady && !_visible) {
+      Future.delayed(Duration.zero, () {
+        if (mounted) setState(() => _visible = true);
+      });
+    }
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(pageId.toUpperCase()),
+        title: Text(widget.pageId.toUpperCase()),
         actions:
-            pageId == 'about'
+            widget.pageId == 'about'
                 ? null
                 : [
                   IconButton(
@@ -32,40 +52,39 @@ class StandardPage extends StatelessWidget {
                   ),
                 ],
       ),
-      body: FutureBuilder<UikPageModel>(
-        future: loadPage(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-          final page = snapshot.data!; //uikpagemodel
-          final widgets = SduiRenderer.buildWidgets(page.widgets);
-          print("widgets.length=====>${widgets.length}");
-          print(widgets);
-          if (widgets.isEmpty) {
-            return const Center(child: Text("no info in api"));
-          }
-
-          return Stack(
-            children: [
-              if (page.backgroundImage != null)
-                SizedBox.expand(
-                  child: Image.network(
-                    page.backgroundImage!,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
-                  ),
+      body: Stack(
+        children: [
+          if (pageProvider.page?.backgroundImage != null)
+            AnimatedOpacity(
+              duration: Duration(milliseconds: 700),
+              opacity: _visible ? 1 : 0,
+              child: SizedBox.expand(
+                child: Image.network(
+                  pageProvider.page!.backgroundImage!,
+                  fit: BoxFit.cover,
                 ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 130, 24, 24),
-                child: SingleChildScrollView(child: Column(children: widgets)),
               ),
-            ],
-          );
-        },
+            ),
+          AnimatedOpacity(
+            duration: Duration(milliseconds: 600),
+            opacity: _visible ? 1 : 0,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(24, 130, 24, 24),
+              child: SingleChildScrollView(
+                child:
+                    isReady
+                        ? Column(
+                          children: List<Widget>.from(
+                            SduiRenderer.buildWidgets(
+                              pageProvider.page!.widgets,
+                            ),
+                          ),
+                        )
+                        : const Center(child: CircularProgressIndicator()),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
