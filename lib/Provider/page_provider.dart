@@ -8,15 +8,21 @@ class PageProvider with ChangeNotifier {
   String? error;
 
   Future<void> loadPage(String pageId) async {
+    debugPrint("🌐 Fetching page: $pageId");
+
     isLoading = true;
     error = null;
     notifyListeners();
 
     try {
       page = await SduiApiService.fetchPage(pageId);
+      debugPrint("✅ Got response: ${page}"); // ADD THIS
+
       error = null;
     } catch (e) {
       error = e.toString();
+      debugPrint("❌ API error: $error"); // ADD THIS
+
       page = null;
     } finally {
       isLoading = false;

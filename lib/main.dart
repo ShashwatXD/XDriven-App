@@ -7,6 +7,9 @@ import 'package:xdriven_app/pages/standard_page.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  debugPrint("🔥 App started");
+
   runApp(
     MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => PageProvider())],
