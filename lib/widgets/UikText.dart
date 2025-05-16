@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../main.dart';
+import '../utils/action_handler.dart';
 
 class UikText extends StatelessWidget {
   final String text;
@@ -19,7 +19,6 @@ class UikText extends StatelessWidget {
 
   factory UikText.fromJson(Map<String, dynamic> json) {
     final props = json['props'] ?? {};
-
     return UikText(
       text: props['text'] ?? '',
       fontSize: (props['fontSize'] ?? 16).toDouble(),
@@ -51,21 +50,10 @@ class UikText extends StatelessWidget {
     }
   }
 
-  void _handleAction(BuildContext context) {
-    if (action == null) return;
-    final type = action!['type'];
-    if (type == 'navigate') {
-      final route = action!['route'];
-      if (route != null) {
-        navigatorKey.currentState?.pushNamed(route);
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _handleAction(context),
+      onTap: () => handleAction(context, action),
       child: Text(
         text,
         style: TextStyle(

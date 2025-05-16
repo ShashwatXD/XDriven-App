@@ -25,9 +25,13 @@ class StandardPage extends StatelessWidget {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
           final page = snapshot.data!;
-          return SingleChildScrollView(
-            child: SduiRenderer(widgets: page.widgets),
-          );
+          final widgets = SduiRenderer.buildWidgets(page.widgets);
+          print(widgets);
+          if (widgets.isEmpty) {
+            return const Center(child: Text("no info in api"));
+          }
+
+          return SingleChildScrollView(child: Column(children: widgets));
         },
       ),
     );

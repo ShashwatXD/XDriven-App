@@ -8,6 +8,8 @@ class SduiApiService {
     final response = await http.get(Uri.parse('$baseUrl/$page'));
 
     if (response.statusCode == 200) {
+      print("called the api 💁");
+      print(response.body);
       final jsonBody = json.decode(response.body);
       return UikPageModel.fromJson(jsonBody);
     } else {
