@@ -1,19 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:xdriven_app/widgets/UikContainer.dart';
+import 'package:xdriven_app/widgets/UikIconButton.dart';
 import 'package:xdriven_app/widgets/UikText.dart';
 
 class SduiRenderer {
   static List<Widget> buildWidgets(List<Map<String, dynamic>> widgets) {
-    return widgets.map((widgetJson) {
+    List<Widget> widgetList = [];
+
+    for (int i = 0; i < widgets.length; i++) {
+      final widgetJson = widgets[i];
       final type = widgetJson['uiType'];
+
+      Widget widget;
       switch (type) {
         case 'UikText':
-          return UikText.fromJson(widgetJson);
+          widget = UikText.fromJson(widgetJson);
+          break;
         case 'UikContainer':
-          return UikContainer.fromJson(widgetJson);
+          widget = UikContainer.fromJson(widgetJson);
+          break;
+        case 'UikIconButton':
+          widget = UikIconButton.fromJson(widgetJson);
+          break;
         default:
-          return const Text("No Info in API");
+          widget = const Text("No Info in API");
       }
-    }).toList();
+
+      widgetList.add(widget);
+
+      if (i < widgets.length - 1) {
+        widgetList.add(const SizedBox(height: 19));
+      }
+    }
+
+    return widgetList;
   }
 }

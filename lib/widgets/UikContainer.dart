@@ -39,13 +39,25 @@ class UikContainer extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     final childWidgets = SduiRenderer.buildWidgets(children);
     return GestureDetector(
       onTap: () => handleAction(context, action),
       child: Container(
         padding: padding,
-        color: color,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              offset: Offset(0, 3),
+              blurRadius: 8.0,
+              spreadRadius: 1.0,
+            ),
+          ],
+          border: Border.all(color: Colors.grey.withOpacity(0.1), width: 1.0),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: childWidgets,
