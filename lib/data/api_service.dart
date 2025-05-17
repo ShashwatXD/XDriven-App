@@ -7,7 +7,7 @@ import 'package:xdriven_app/models/UikPageModel.dart';
 class SduiApiService {
   static Future<UikPageModel> fetchPage(String page) async {
     try {
-      final uri = Uri.parse('$baseUrl/$page');
+      final uri = Uri.parse('$baseUrl/$page',);
       debugPrint("📡 GET: $uri");
 
       final response = await http
