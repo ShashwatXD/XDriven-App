@@ -31,20 +31,27 @@ XDriven follows a server-driven architecture where:
 
 4. User interactions trigger actions defined in the JSON (navigation, API calls, etc.)
 
-Quick Start
-----------
+## Quick Start
 
-Clone the repository:
-git clone https://github.com/yourusername/xdriven.git
+'''bash
+# Clone the repository
+git clone https://github.com/your-username/xdriven_app.git
 
-Navigate to project directory:
-cd xdriven
+# Navigate to the project directory
+cd xdriven_app
 
-Install dependencies:
+# Install dependencies
 flutter pub get
 
-Run the app:
+# Generate launcher icons
+flutter pub run flutter_launcher_icons:main
+
+# Generate native splash screen
+flutter pub run flutter_native_splash:create
+
+# Run the app
 flutter run
+
 
 What Makes XDriven Unique
 ------------------------
