@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:xdriven_app/Provider/page_provider.dart';
 import 'package:xdriven_app/main.dart';
 import 'package:xdriven_app/renderer/renderer.dart';
+import 'package:xdriven_app/utils/onRefreshHandle.dart';
 
 class StandardPage extends StatefulWidget {
   final String pageId;
@@ -30,33 +31,18 @@ class _StandardPageState extends State<StandardPage> {
     final isReady = pageProvider.page != null && !pageProvider.isLoading;
     if (isReady && !_visible) {
       Future.delayed(Duration.zero, () {
-        if (mounted) setState(() => _visible = true);
+        if (mounted)
+          setState(() => _visible = true); //used for the opacity effect
       });
     }
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(widget.pageId.toUpperCase()),
-        actions:
-            widget.pageId == 'about'
-                ? null
-                : [
-                  IconButton(
-                    icon: const Icon(Icons.help_outline, size: 29),
-                    onPressed: () {
-                      navigatorKey.currentState?.pushNamed('/about');
-                    },
-                  ),
-                ],
-      ),
       body: Stack(
         children: [
           if (pageProvider.page?.backgroundImage != null)
             AnimatedOpacity(
-              duration: Duration(milliseconds: 700),
+              duration: Duration(milliseconds: 2850),
               opacity: _visible ? 1 : 0,
               child: SizedBox.expand(
                 child: Image.network(
@@ -66,21 +52,35 @@ class _StandardPageState extends State<StandardPage> {
               ),
             ),
           AnimatedOpacity(
-            duration: Duration(milliseconds: 600),
+            duration: Duration(milliseconds: 900),
             opacity: _visible ? 1 : 0,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(24, 130, 24, 24),
-              child: SingleChildScrollView(
-                child:
-                    isReady
-                        ? Column(
-                          children: List<Widget>.from(
-                            SduiRenderer.buildWidgets(
-                              pageProvider.page!.widgets,
+              padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+              child: RefreshIndicator(
+                onRefresh:
+                    () => refreshPage(
+                      context: context,
+                      pageId: widget.pageId,
+                      hideContent: () => setState(() => _visible = false),
+                      showContent: () => setState(() => _visible = true),
+                    ),
+
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child:
+                      isReady
+                          ? Column(
+                            children: List<Widget>.from(
+                              SduiRenderer.buildWidgets(
+                                pageProvider.page!.widgets,
+                              ),
                             ),
+                          )
+                          : const SizedBox(
+                            height: 1100,
+                            child: Center(child: CircularProgressIndicator()),
                           ),
-                        )
-                        : const Center(child: CircularProgressIndicator()),
+                ),
               ),
             ),
           ),

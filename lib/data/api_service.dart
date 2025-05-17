@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:xdriven_app/contants/base_url.dart';
+import 'package:xdriven_app/constants/base_url.dart';
 import 'package:xdriven_app/models/UikPageModel.dart';
 
 class SduiApiService {

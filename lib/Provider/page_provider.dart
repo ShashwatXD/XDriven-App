@@ -16,13 +16,12 @@ class PageProvider with ChangeNotifier {
 
     try {
       page = await SduiApiService.fetchPage(pageId);
-      debugPrint("✅ Got response: ${page}"); // ADD THIS
+      debugPrint("✅ Got response: ${page}");
 
       error = null;
     } catch (e) {
       error = e.toString();
-      debugPrint("❌ API error: $error"); // ADD THIS
-
+      debugPrint("❌ API error: $error");
       page = null;
     } finally {
       isLoading = false;

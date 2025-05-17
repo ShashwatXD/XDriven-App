@@ -26,7 +26,7 @@ class XdrivenApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
-      title: 'Xdriven',
+      title: 'XDriven',
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFFD8DBE2),
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFA9BCD0)),

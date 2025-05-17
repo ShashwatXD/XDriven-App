@@ -35,17 +35,37 @@ class UikIconButton extends StatelessWidget {
     }
   }
 
+  Alignment? parseAlignment(String? alignment) {
+    switch (alignment) {
+      case 'topLeft':
+        return Alignment.topLeft;
+      case 'topRight':
+        return Alignment.topRight;
+      case 'bottomLeft':
+        return Alignment.bottomLeft;
+      case 'bottomRight':
+        return Alignment.bottomRight;
+      case 'center':
+        return Alignment.center;
+      default:
+        return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        IconButton(
-          tooltip: tooltip,
-          icon: Icon(icon),
-          onPressed: () => handleAction(context, action),
-        ),
-      ],
+    return Align(
+      alignment: parseAlignment(action?['alignment']) ?? Alignment.topRight,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          IconButton(
+            tooltip: tooltip,
+            icon: Icon(icon),
+            onPressed: () => handleAction(context, action),
+          ),
+        ],
+      ),
     );
   }
 }
