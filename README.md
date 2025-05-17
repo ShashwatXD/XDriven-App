@@ -20,14 +20,20 @@ Full Routing System - Define and control routes without hardcoding screens
 
 ```mermaid
 graph TD
-    A[Start App] --> B[Initialize Provider and Splash]
+    A[Start App] --> B[Initialize Provider
+                         and Splash]
     B --> C[Call Backend API via
-     PageProvider with PageId]
+     PageProvider with
+         PageId]
     C --> D[Decode JSON: widgets,
          props, actions]
-    D --> E[Pass to Renderer → UikWidget Mapping]
-    E --> F[Render Dynamic Widgets on Screen]
-    F --> G[Attach Tap Actions like Navigation]
+    D --> E[Pass to Renderer →
+            UikWidget Mapping]
+    E --> F[Render Dynamic
+            Widgets on Screen]
+    F --> G[Attach Tap
+         Actions like
+           Navigation]
 ```
 
 How It Works🚀
