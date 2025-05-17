@@ -1,5 +1,5 @@
-XDriven - Server-Driven UI Flutter App
-==================================
+XDriven - Server-Driven UI FlutterApp
+=====================================
 
 XDriven is a powerful Flutter application built around a Server-Driven UI (SDUI) architecture. Unlike traditional applications where UI components are hardcoded, XDriven dynamically renders its entire interface from JSON data fetched from your backend.
 
@@ -18,12 +18,22 @@ Animation Support - Add fade-ins, transitions, and other animations through JSON
 
 Full Routing System - Define and control routes without hardcoding screens
 
+```mermaid
+graph TD
+    A[Start App] --> B[Initialize Provider and Splash]
+    B --> C[Call Backend API via PageProvider with PageId]
+    C --> D[Decode JSON: widgets, props, actions]
+    D --> E[Pass to Renderer → UikWidget Mapping]
+    E --> F[Render Dynamic Widgets on Screen]
+    F --> G[Attach Tap Actions like Navigation]
+```
+
 How It Works🚀
 -----------
 
 XDriven follows a server-driven architecture where:
 
-1. The app requests UI data from your backend API
+1. The app requests UI data from your backend API  (https://github.com/ShashwatXD/XDriven-Go)
 
 2. The server responds with JSON describing screens, widgets, and actions
 
@@ -31,26 +41,6 @@ XDriven follows a server-driven architecture where:
 
 4. User interactions trigger actions defined in the JSON (navigation, API calls, etc.)
 
-## Quick Start
-
-'''bash
-# Clone the repository
-git clone https://github.com/your-username/xdriven_app.git
-
-# Navigate to the project directory
-cd xdriven_app
-
-# Install dependencies
-flutter pub get
-
-# Generate launcher icons
-flutter pub run flutter_launcher_icons:main
-
-# Generate native splash screen
-flutter pub run flutter_native_splash:create
-
-# Run the app
-flutter run
 
 
 What Makes XDriven Unique
@@ -67,3 +57,24 @@ Navigation from Backend — Page navigation and URL launches are handled through
 Animation Support — Animations are managed using AnimatedContainer and AnimatedOpacity.
 
 Full Routing Support — Routes like /home, /about are resolved from JSON without hardcoding screens.
+
+
+## How to Run the App
+
+### 1. Clone the Repository
+
+Clone the repository with:
+
+```bash
+git clone https://github.com/ShashwatXD/XDriven-App
+
+```
+###2. Install Dependencies
+```bash
+ flutter pub get
+```
+### 3.Run the App
+```bash
+flutter run
+```
+
