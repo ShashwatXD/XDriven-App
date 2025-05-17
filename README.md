@@ -1,21 +1,31 @@
-XDriven App
+XDriven - Server-Driven UI Flutter App
+XDriven is a powerful Flutter application built around a Server-Driven UI (SDUI) architecture. Unlike traditional applications where UI components are hardcoded, XDriven dynamically renders its entire interface from JSON data fetched from your backend.
+Features
 
-XDriven is a Flutter app built entirely on the concept of Server-Driven UI (SDUI). Instead of hardcoding screens in Flutter, all UI components — such as text, images, buttons, and layout structure — are sent from the backend via JSON. The app dynamically interprets these instructions and renders the interface on the fly.
+Dynamic UI from JSON - Render entire screens and UI components from server-provided JSON
+Zero-update UI Changes - Update layouts, content, and designs without pushing app updates
+Custom Widget System - Extensive library of customizable widgets controlled through JSON properties
+Backend-driven Navigation - Control app flow and navigation directly from your server
+Animation Support - Add fade-ins, transitions, and other animations through JSON configuration
+Full Routing System - Define and control routes without hardcoding screens
 
-This allows complete design flexibility and app updates without going through the Play Store or App Store — all powered by your backend.
+How It Works
+XDriven follows a server-driven architecture where:
 
-🚀 What Makes XDriven Special?
+The app requests UI data from your backend API
+The server responds with JSON describing screens, widgets, and actions
+XDriven's renderer system translates this JSON into native Flutter widgets
+User interactions trigger actions defined in the JSON (navigation, API calls, etc.)
 
- Dynamic UI via JSON: Every page is defined by a JSON response from the server, parsed and rendered in real-time.
+Quick Start
+# Clone the repository
+git clone https://github.com/yourusername/xdriven.git
 
- Renderer System: The Renderer maps uiType from JSON to actual Flutter widgets like UikText, UikContainer, UikIconButton, etc.
+# Navigate to project directory
+cd xdriven
 
- Custom Widgets: All widgets (like text, image, container, buttons) are customized and extended to support JSON props like padding, color, fontSize, alignment, actions, etc.
+# Install dependencies
+flutter pub get
 
- Backend-Driven Navigation: Tap actions (like navigating to another page or launching a URL) are also configured inside JSON.
-
- No Code Change Needed: UI updates can be made by changing the backend response — no Flutter redeploy required.
- 
- Built-in Animations: Smooth transitions using AnimatedContainer and AnimatedOpacity for fade-in and scroll-based effects.
-
- Full Routing System: Built-in support for dynamic pages like /home, /about, /profile, etc.
+# Run the app
+flutter run
